@@ -7,6 +7,14 @@
     <TextView android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight="1"/>
+    <Button android:id="@+id/send_message_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Join Message"/>
+    <Button android:id="@+id/ready_message_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ready Message"/>
     <android.support.v7.app.MediaRouteButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
