@@ -5,4 +5,17 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Press 'Ready' to indicate that you are ready to start playing. Once all players click 'Ready', the game will begin."
+            android:id="@+id/ready_text"
+            android:layout_gravity="center_horizontal"/>
+
+    <Button android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ready"
+            android:id="@+id/ready_button"/>
+
 </LinearLayout>
