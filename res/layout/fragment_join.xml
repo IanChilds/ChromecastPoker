@@ -10,6 +10,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:hint="Enter User Name"
+            android:inputType="textCapWords"
             android:id="@+id/user_name"
             android:layout_gravity="center_horizontal"/>
 

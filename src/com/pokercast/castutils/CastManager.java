@@ -63,6 +63,7 @@ public class CastManager {
     private ConnectionFailedListener mConnectionFailedListener = new ConnectionFailedListener();
     private boolean mWaitingForReconnect;
     private boolean mApplicationStarted = false;
+    private OnApplicationConnectedListener mOnApplicationConnectedListener;
 
     private GoogleApiClient mApiClient;
     private PokerCastChannel mPokerCastChannel;
@@ -203,6 +204,18 @@ public class CastManager {
         }
     }
 
+    public interface OnApplicationConnectedListener {
+        public void onApplicationConnected();
+    }
+
+    public void setOnApplicationConnectedListener(OnApplicationConnectedListener onApplicationConnectedListener) {
+        mOnApplicationConnectedListener = onApplicationConnectedListener;
+    }
+
+    public PokerCastChannel getPokerCastChannel() {
+        return mPokerCastChannel;
+    }
+
     private class MediaRouterCallback extends MediaRouter.Callback {
 
         @Override
@@ -262,6 +275,10 @@ public class CastManager {
                                         mApplicationStarted = true;
                                         String applicationStatus = result.getApplicationStatus();
                                         boolean wasLaunched = result.getWasLaunched();
+
+                                        if (mOnApplicationConnectedListener != null) {
+                                            mOnApplicationConnectedListener.onApplicationConnected();
+                                        }
 
                                         mPokerCastChannel = new PokerCastChannel();
                                         try {

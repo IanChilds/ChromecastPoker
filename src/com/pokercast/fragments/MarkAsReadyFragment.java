@@ -3,27 +3,30 @@ package com.pokercast.fragments;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import com.pokercast.R;
 import com.pokercast.activities.GamePlayActivity;
-import com.pokercast.activities.MarkAsReadyActivity;
+import com.pokercast.castutils.CastManager;
 
 /**
  *
  */
 public class MarkAsReadyFragment extends Fragment {
-    private Button mButton;
+    public static final String TAG = "MarkAsReadyFragment";
 
-    public TextView mTextView;
+    private Button mButton;
+    private TextView mTextView;
+    private CastManager mCastManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mCastManager = CastManager.getInstance();
     }
 
     @Override
@@ -32,21 +35,28 @@ public class MarkAsReadyFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_mark_as_ready, container, false);
         Intent intent = getActivity().getIntent();
-        String user_name = intent.getStringExtra(JoinFragment.EXTRA_MESSAGE);
+        final String userName = intent.getStringExtra(JoinFragment.USER_NAME_EXTRA);
         mTextView = (TextView) v.findViewById(R.id.ready_text);
-        mTextView.setText("Hello " + user_name + ", welcome to the game. Press 'Ready' to indicate that you are ready to start playing. Once all players click 'Ready', the game will begin.");
+        mTextView.setText("Hello " + userName + ", welcome to the game. Press 'Ready' to indicate that you are ready to start playing. Once all players click 'Ready', the game will begin.");
         mButton = (Button) v.findViewById(R.id.ready_button);
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToGamePlay(view);
+                goToGamePlay(userName);
             }
         });
         return v;
     }
 
-    public void goToGamePlay(View view) {
+    public void goToGamePlay(String userName) {
+        sendReadyMessage(userName);
         Intent intent = new Intent(getActivity(), GamePlayActivity.class);
         startActivity(intent);
     }
+
+    public void sendReadyMessage(String userName) {
+        Log.i(TAG, "Sending ready message");
+        mCastManager.sendReadyMessage(userName);
+    }
+
 }
